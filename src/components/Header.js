@@ -27,14 +27,13 @@ function Header() {
         <NavLink to="/create" className="header-link">
           submit
         </NavLink>
+        </div>
         <div className="flex">
-        <NavLink to="/login" className="header-link">
-          login
-        </NavLink>
+          <NavLink to="/login" className="header-link">
+            login
+          </NavLink>
         </div>
       </div>
-
-    </div>
   )
 }
 
