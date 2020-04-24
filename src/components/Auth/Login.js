@@ -1,5 +1,7 @@
 import React from "react";
 
+import firebase from '../../firebase'
+
 import userFormValidation from './useFormValidation'
 import validateLogin from './validateLogin'
 
@@ -9,9 +11,9 @@ const INITIAL_STATE ={
   password:""
 }
 
-function Login(props) {
-  userFormValidation(INITIAL_STATE);
+const Login = (props) => {
   const [login,setLogin] = React.useState(true);
+  const [firebaseError,setFirebaseError] = React.useState(null)
   const {
     handleChange,
     handleSubmit,
@@ -19,11 +21,24 @@ function Login(props) {
     values,
     errors,
     isSubmitting
-  } = userFormValidation(INITIAL_STATE,validateLogin);
+  } = userFormValidation(INITIAL_STATE,validateLogin,authenticateUser);
+
+  async function authenticateUser(){
+    const {name, email, password} = values;
+    try{
+      login
+        ? await firebase.login(email, password)
+        : await firebase.register(name,email,password)
+        props.history.push('/');
+      }catch(err){
+      setFirebaseError(err.message)
+    }
+      
+  }
 
   return (
     <div>
-<h2 className="mv3">{login?'Login':'Create Account'}</h2>
+      <h2 className="mv3">{login?'Login':'Create Account'}</h2>
       <form onSubmit={handleSubmit} className="flex flex-column">
        {!login &&  <input 
           type="text"
@@ -32,7 +47,6 @@ function Login(props) {
           name='name'
           onChange={handleChange}
           value={values.name}
-          onBlur={handlerBlur}
         />}
 
         <input 
@@ -58,6 +72,7 @@ function Login(props) {
 
         />
         {errors.password && <p className='error-text'>{errors.password}</p>}
+        {firebaseError && <p className='error-text'>{firebaseError}</p>}
 
         <div className="flex mt3">
           <button
