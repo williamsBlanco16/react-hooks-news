@@ -1,9 +1,10 @@
 import React from "react";
-
+import {Link} from "react-router-dom"
 import firebase from '../../firebase'
 
 import userFormValidation from './useFormValidation'
 import validateLogin from './validateLogin'
+import { fromParams } from "google-gax/build/src/routingHeader";
 
 const INITIAL_STATE ={
   name:"",
@@ -95,8 +96,10 @@ const Login = (props) => {
             }
           </button>
         </div>
-
       </form>
+      <div className="forgot-password">
+        <Link to="/forgot"> forgot password</Link>
+      </div>
     </div>
   );
 }
