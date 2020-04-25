@@ -1,7 +1,10 @@
 import React from "react";
+import useAuth from '../Auth/useAuth'
 
-function LinkList(props) {
-  return <div>LinkList</div>;
+const LinkList=(props)=> {
+  const user = useAuth()
+  console.log({user})
+  return <div>linkList</div>
 }
 
 export default LinkList;

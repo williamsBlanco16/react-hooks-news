@@ -25,6 +25,10 @@ class Firebase {
       password
     )
   }
+
+  async logout(){
+    await this.auth.signOut()
+  }
 }
 
 const firebase = new Firebase();
